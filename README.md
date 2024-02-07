@@ -1,4 +1,12 @@
-# Modules
+### Architecture
+
+The architecture below depicts the overall architecture of the IoTaaS system.
+![image](https://github.com/esyker/SafeHomeIoT/assets/50277636/fc275049-5e7a-4e90-88e4-2333a225b190)
+
+These are the main components of the IoTaaS system:
+![image](https://github.com/esyker/SafeHomeIoT/assets/50277636/a27eaa53-30d4-472a-a77a-f8c6e814eee6)
+
+### Modules
 
 Our project enterprise integration system is divided into several modules, the following modules implement the Telecommunications Provider and Network activity:
 
