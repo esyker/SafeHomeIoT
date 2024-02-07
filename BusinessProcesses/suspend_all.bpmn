@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1l0yeho" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.7.1">
+  <bpmn:collaboration id="Collaboration_0j7mq5m">
+    <bpmn:participant id="Participant_1wc4crc" name="BPM IoT" processRef="SuspendAll" />
+  </bpmn:collaboration>
+  <bpmn:process id="SuspendAll" name="Suspend All Subscriptions" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_1ed13cp</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_0r6lz7h">
+        <bpmn:timeCycle xsi:type="bpmn:tFormalExpression">R4/2021-05-26T9:12:00/PT2M</bpmn:timeCycle>
+      </bpmn:timerEventDefinition>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1ed13cp" sourceRef="StartEvent_1" targetRef="Event_0wsnxsd" />
+    <bpmn:sequenceFlow id="Flow_0qj25f3" sourceRef="Activity_0ki5chn" targetRef="Event_01buyh2" />
+    <bpmn:endEvent id="Event_01buyh2">
+      <bpmn:incoming>Flow_0qj25f3</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:task id="Activity_0ki5chn">
+      <bpmn:incoming>Flow_17t3xjv</bpmn:incoming>
+      <bpmn:outgoing>Flow_0qj25f3</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Flow_17t3xjv" sourceRef="Event_0wsnxsd" targetRef="Activity_0ki5chn" />
+    <bpmn:intermediateCatchEvent id="Event_0wsnxsd">
+      <bpmn:incoming>Flow_1ed13cp</bpmn:incoming>
+      <bpmn:outgoing>Flow_17t3xjv</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_11pkemt" messageRef="Message_00q2g99" />
+    </bpmn:intermediateCatchEvent>
+  </bpmn:process>
+  <bpmn:message id="Message_00q2g99" name="Message_38msc23" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_0j7mq5m">
+      <bpmndi:BPMNShape id="Participant_1wc4crc_di" bpmnElement="Participant_1wc4crc" isHorizontal="true">
+        <dc:Bounds x="120" y="52" width="600" height="250" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1ed13cp_di" bpmnElement="Flow_1ed13cp">
+        <di:waypoint x="215" y="177" />
+        <di:waypoint x="262" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0qj25f3_di" bpmnElement="Flow_0qj25f3">
+        <di:waypoint x="440" y="177" />
+        <di:waypoint x="492" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_17t3xjv_di" bpmnElement="Flow_17t3xjv">
+        <di:waypoint x="298" y="177" />
+        <di:waypoint x="340" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Event_1yo92zm_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_01buyh2_di" bpmnElement="Event_01buyh2">
+        <dc:Bounds x="492" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0ki5chn_di" bpmnElement="Activity_0ki5chn">
+        <dc:Bounds x="340" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_190wgnq_di" bpmnElement="Event_0wsnxsd">
+        <dc:Bounds x="262" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd" xmlns:camunda="http://camunda.org/schema/1.0/dmn" id="Definitions_1fnexyc" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="3.7.1">
+  <decision id="build_services_list" name="Build Services List">
+    <decisionTable id="decisionTable_1">
+      <input id="input_1" label="Service 1" camunda:inputVariable="service1">
+        <inputExpression id="inputExpression_1" typeRef="boolean">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0qpjipk" label="Service 2" camunda:inputVariable="service2">
+        <inputExpression id="LiteralExpression_1pqwh6a" typeRef="boolean">
+          <text></text>
+        </inputExpression>
+      </input>
+      <output id="output_1" label="Service List" typeRef="string" />
+      <rule id="DecisionRule_1xlmdcu">
+        <inputEntry id="UnaryTests_0vnlk0f">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1v94ybx">
+          <text>true</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_045vxgr">
+          <text>"[1,2]"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_11smkcm">
+        <inputEntry id="UnaryTests_18c23gg">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1eil7b5">
+          <text>false</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1sx94n0">
+          <text>"[1]"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0ls2nre">
+        <inputEntry id="UnaryTests_0o1gl6k">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1ewgbta">
+          <text>true</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0elcn86">
+          <text>"[2]"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1s9e539">
+        <inputEntry id="UnaryTests_1aeminp">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0ami0t0">
+          <text>false</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_066bvjo">
+          <text>"[]"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>

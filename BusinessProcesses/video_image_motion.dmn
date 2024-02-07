@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd" id="Definitions_0cillxv" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="3.7.1">
+  <decision id="alarm2" name="Video/Image/Motion Alarm">
+    <decisionTable id="decisionTable_1">
+      <input id="input_1" label="Readings">
+        <inputExpression id="inputExpression_1" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <output id="output_1" label="Raise Alarm" typeRef="string" />
+      <rule id="DecisionRule_1m3jgac">
+        <inputEntry id="UnaryTests_117isog">
+          <text>"intrusion"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1pzh40o">
+          <text>true</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1q9bdpa">
+        <inputEntry id="UnaryTests_0njj7f1">
+          <text>"not intrusion"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1h3sjw4">
+          <text>false</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd" xmlns:camunda="http://camunda.org/schema/1.0/dmn" id="Definitions_1hljc6i" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="3.7.1">
+  <decision id="temperature" name="Smoke/Temperature Decision">
+    <decisionTable id="decisionTable_1" hitPolicy="FIRST">
+      <input id="input_1" label="Temperature" camunda:inputVariable="temperature">
+        <inputExpression id="inputExpression_1" typeRef="boolean">
+          <text></text>
+        </inputExpression>
+      </input>
+      <output id="output_1" label="Raise Alarm" name="raiseAlarm" typeRef="boolean" />
+      <rule id="DecisionRule_11pg64y">
+        <inputEntry id="UnaryTests_1jp0d7v">
+          <text>&gt; 40</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1p6pf49">
+          <text>true</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1he2a34">
+        <inputEntry id="UnaryTests_1vl8sim">
+          <text>&lt; 10</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0bpec2y">
+          <text>true</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_16ude13">
+        <inputEntry id="UnaryTests_0sqbqec">
+          <text>&gt;= 10 </text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_05p61bd">
+          <text>false</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0izs9iu">
+        <inputEntry id="UnaryTests_0jbdx5c">
+          <text>&lt;= 40</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_048xtmn">
+          <text>false</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1kt35fz">
+        <inputEntry id="UnaryTests_1yjsneb">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1fe38oo">
+          <text>false</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1rrxx96">
+        <inputEntry id="UnaryTests_0bhdivr">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1t549pq">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0f0kf9s">
+        <inputEntry id="UnaryTests_1djh6e3">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0nujxax">
+          <text></text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>

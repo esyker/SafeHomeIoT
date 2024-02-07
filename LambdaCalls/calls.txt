@@ -1,0 +1,5 @@
+curl -i -H "Content-Type: Application/json" --data "@activate.json" -X POST  https://m3i5yiups7.execute-api.us-east-1.amazonaws.com/default/safehomeiot-ActivateSubscriber
+curl -i -H "Content-Type: Application/json" --data "@suspend.json" -X POST   https://38a70y1mtc.execute-api.us-east-1.amazonaws.com/default/safehomeiot-SuspendSubscriber
+curl -i -H "Content-Type: Application/json" --data "@getStatus.json" -X POST   https://3h8ecbbama.execute-api.us-east-1.amazonaws.com/default/safehomeiot-GetSubscriberStatus
+curl -i -H "Content-Type: Application/json" --data "@delete.json" -X POST   https://27kxnog9li.execute-api.us-east-1.amazonaws.com/default/safehomeiot-DeleteSubscriber
+curl -i -H "Content-Type: Application/json" --data "@getNextEvent.json" -X POST   https://mpj2xwu1v7.execute-api.us-east-1.amazonaws.com/default/safehomeiot-getNextEvent

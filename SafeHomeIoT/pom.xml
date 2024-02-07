@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>ist.meic.ie</groupId>
+    <artifactId>SafeHomeIoT</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <packaging>pom</packaging>
+
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
+
+    <dependencies>
+
+    </dependencies>
+    <modules>
+
+        <module>utils</module>
+        <module>eventmediation</module>
+        <module>events</module>
+        <module>eventmediationpre</module>
+        <module>simulator</module>
+        <module>eventservice</module>
+        <module>MSISDNactivate</module>
+        <module>MSISDNsuspend</module>
+        <module>MSISDNgetStatus</module>
+        <module>MSISDNdelete</module>
+        <module>statusmediation</module>
+        <module>customerhandling</module>
+        <module>constants</module>
+        <module>Lambda-subscribetoservices</module>
+        <module>Lambda-cancelsubscription</module>
+        <module>Lambda-createcustomer</module>
+        <module>Lambda-addiotdevice</module>
+        <module>Lambda-deleteiotdevice</module>
+        <module>Lambda-getCustomerInfo</module>
+        <module>Lambda-deletecustomer</module>
+        <module>Lambda-getdeviceinfo</module>
+        <module>Lambda-paysubscription</module>
+        <module>eventsReader</module>
+        <module>Lambda-analytics</module>
+        <module>Lambda-suspendall</module>
+        <module>Lambda-catalogue</module>
+        <module>Lambda-validateuserform</module>
+        <module>Lambda-raisealarm</module>
+        <module>Lambda-getcustomerbysimcard</module>
+        <module>testconsumer</module>
+        <module>Lambda-createemptycustomer</module>
+        <module>eventsReaderKafka</module>
+        <module>kafkaStreamAlarm</module>
+        <module>alarmsReader</module>
+        <module>Lambda-email</module>
+        <module>mailer</module>
+    </modules>
+
+</project>

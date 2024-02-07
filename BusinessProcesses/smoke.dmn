@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd" xmlns:camunda="http://camunda.org/schema/1.0/dmn" id="Definitions_09lzbkf" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="3.7.1">
+  <decision id="smoke" name="Smoke">
+    <decisionTable id="decisionTable_1" hitPolicy="FIRST">
+      <input id="input_1" label="Measurement" camunda:inputVariable="measurement">
+        <inputExpression id="inputExpression_1" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <output id="output_1" label="Raise Alarm" name="raiseAlarm" typeRef="boolean" />
+      <rule id="DecisionRule_1fitseg">
+        <inputEntry id="UnaryTests_1ujgd4l">
+          <text>&gt; 50</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1hcodcs">
+          <text>true</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1lamsvm">
+        <inputEntry id="UnaryTests_0d57ucq">
+          <text>&lt;= 50</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0mfg1bh">
+          <text>false</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0wmfadh">
+        <inputEntry id="UnaryTests_1kn0gki">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1yuechj">
+          <text></text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>

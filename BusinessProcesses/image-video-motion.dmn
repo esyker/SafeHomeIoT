@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd" xmlns:camunda="http://camunda.org/schema/1.0/dmn" id="Definitions_0gawczw" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="3.7.1">
+  <decision id="image-video-motion" name="Decision 1">
+    <decisionTable id="decisionTable_1">
+      <input id="input_1" label="Measurement" camunda:inputVariable="measurement">
+        <inputExpression id="inputExpression_1" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <output id="output_1" label="Raise Alarm" name="raiseAlarm" typeRef="boolean" />
+      <rule id="DecisionRule_0azhz8j">
+        <inputEntry id="UnaryTests_1hs47ea">
+          <text>"intrusion"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1654til">
+          <text>true</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1pfivio">
+        <inputEntry id="UnaryTests_02heacj">
+          <text>not("intrusion")</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1s2wno8">
+          <text>false</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>

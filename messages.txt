@@ -1,0 +1,189 @@
+************************* SUBSCRIBE TO SERVICE ****************************
+//Catalog of services
+[{serviceId: 5, serviceName: "House Inventory Management", description:"aaaaaa", monthlyPrice: 24.99}, {serviceId: 6, serviceName: "House Anomaly Detection", description:"bbbbbbb", monthlyPrice: 39.99}]
+
+// Data form
+{
+	name: "Pedro",
+	age: 21,
+	address: 
+		{
+			country: “country”,
+			state: “state”,
+			district: “district”,
+			street: “street name”,
+			doorNum: 37
+		}
+	subsribedServices: [{serviceId: 5, serviceName: "House Inventory Management", description:"aaaaaa"}],
+}
+
+// Payment data
+{
+	bankAccountId: 138945,
+	accountOwnerName: "Pedro Pereira",
+	totalAmmount: 64.98,
+	billingId: 4489198198197
+	
+}
+
+************************* UNSUBSCRIBE TO SERVICE ****************************
+{
+	subscriptionId: 7894,
+	servicesToUnsubscribe: [{serviceId: 5, serviceName: "House Inventory Management", description:"aaaaaa"}],
+}
+
+// message sent to bank to cancel billing
+{
+	bankAccountId: 138945,
+	accountOwnerName: "Pedro Pereira",
+	billingId: 4489198198197
+}	
+
+************************* ADD REMOVE IOT DEVICE ****************************
+// IoT device installation assistance scheduling
+{
+	deviceId: 568444,
+	state: "pending",
+	date: "2021-03-18",
+	customerInformation: 
+	{
+		customerId: 254,
+		address: 
+		{
+			country: “country”,
+			state: “state”,
+			district: “district”,
+			street: “street name”,
+			doorNum: 37
+		}
+	}
+}
+
+// SIM card activation request
+{
+	simCardNumber: 691387
+}
+
+
+// Send cryptogrphic keys
+{
+	publicKey: "a15df1651asd1651"
+}
+
+************************* CHANGE CONFIGURATION ****************************
+// IoT device configuration
+{
+	deviceId: 145,
+	signalSendingInterval: 500,
+	type: "temperature sensor",
+	associatedCustomer: 
+	{
+		customerId: 254,
+		address: 
+		{
+			country: “country”,
+			state: “state”,
+			district: “district”,
+			street: “street name”,
+			doorNum: 37
+		}
+	}
+}
+
+// Add IoT device
+{
+	deviceId: 145,
+	signalSendingInterval: 500,
+	type: "temperature sensor",
+	userId: 254
+}
+
+************************* HOUSE INVENTORY MANAGEMENT ****************************
+//Message sent from the server to the supermarket:
+{
+	orderId: 25,
+	products: [product:{productID: “PID1”, quantity: 5}, product:{productID: “PID2”, quantity: 2}, product:{productID: “PID3”, quantity: 1}],
+	customerAddress: 
+	{
+		country: “country”,
+		state: “state”,
+		district: “district”,
+		street: “street name”,
+		doorNum: 37
+	}
+}
+
+//Message sent from client to server when the order arrives
+{
+	orderId: 25,
+	prodcutsReceived: [product:{productID: “PID1”, 3}, product:{productID: “PID2”, quantity: 2}],
+	arrivalDate: "2021-03-18"
+}
+
+//House inventory product
+{
+	productId: "PID4",
+	productSerialNo: 121651678,
+	name: "Nestle smarties yoghurt",
+	type: "yoghurt"
+}
+
+
+************************* RAISE ALARM ****************************
+
+//Message sent from a temperature sensor to the server
+{
+	sensorId: 568444,
+	sensorType: "temperature",
+	temperatureMeasurement: 19.5,
+	timestamp: "2021-03-18:14:59:20"
+}
+
+// Message sent from a motion sensor to the server
+{
+	sensorId: 568444,
+	sensorType: "motion",
+	motionDetected: "true",
+	timestamp: "2021-03-18:14:59:20"
+}
+
+// Message sent to customer informing of a possible intrusion
+{
+	suspiciousMeasurements: [{sensorId: 245, sensorType:"temperature", measurement: 55, timestamp: 2021-03-18:14:59:20}, {sensorId: 245, sensorType:"motion", measurement: true, timestamp: 2021-03-18:14:59:30}],
+	occurrenceId: 45,
+	dangerLevel: "intermediate"
+}
+
+// Danger level client acknowledge
+{
+	occurrenceId: 45,
+	level: "very high"
+}
+
+
+// Message sent to emergeny services
+{
+	typeOfActivity: "theft",
+	customerAddress: 
+	{
+		country: “country”,
+		state: “state”,
+		district: “district”,
+		street: “street name”,
+		doorNum: 37
+	}
+}
+
+
+//for testing
+{"deviceId": 568444, "type": "temperature", "measurement": 19.5}
+{"deviceId": 123456, "type": "video", "description": "this is happening"}
+{"deviceId": 471951, "type": "image", "description": "some picture"}
+{"deviceId": 297326, "type": "smoke", "measurement": 47.5}
+{"deviceId": 238798, "type": "motion", "description": "detected movement here"}
+
+
+
+
+
+

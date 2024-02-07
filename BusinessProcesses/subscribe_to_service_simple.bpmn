@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1snt0a4" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.7.1">
+  <bpmn:collaboration id="Collaboration_0a0ywfq">
+    <bpmn:participant id="Participant_1owfxv1" name="BPM IoT" processRef="susbcribe-to-services" />
+    <bpmn:participant id="Participant_01mpje0" name="Customer" processRef="choose-services" />
+    <bpmn:messageFlow id="Flow_08nh1aq" sourceRef="Participant_01mpje0" targetRef="Event_16fvuor" />
+  </bpmn:collaboration>
+  <bpmn:process id="susbcribe-to-services" name="Subscribe To Services" isExecutable="true">
+    <bpmn:endEvent id="Event_0oemaj9">
+      <bpmn:incoming>Flow_10w5h91</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="Activity_0qzu4r4" name="Subscribe User To Services" camunda:type="external" camunda:topic="subscribe-to-services">
+      <bpmn:incoming>Flow_180zywl</bpmn:incoming>
+      <bpmn:outgoing>Flow_10w5h91</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:startEvent id="Event_16fvuor" name="Receive Chosen Services">
+      <bpmn:outgoing>Flow_180zywl</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_04dxw4n" messageRef="Message_1i9wf22" />
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_10w5h91" sourceRef="Activity_0qzu4r4" targetRef="Event_0oemaj9" />
+    <bpmn:sequenceFlow id="Flow_180zywl" sourceRef="Event_16fvuor" targetRef="Activity_0qzu4r4" />
+  </bpmn:process>
+  <bpmn:process id="choose-services" name="Choose Services" isExecutable="true" />
+  <bpmn:message id="Message_1i9wf22" name="services-message" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_0a0ywfq">
+      <bpmndi:BPMNShape id="Participant_1owfxv1_di" bpmnElement="Participant_1owfxv1" isHorizontal="true">
+        <dc:Bounds x="129" y="402" width="491" height="250" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_10w5h91_di" bpmnElement="Flow_10w5h91">
+        <di:waypoint x="440" y="527" />
+        <di:waypoint x="562" y="527" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_180zywl_di" bpmnElement="Flow_180zywl">
+        <di:waypoint x="228" y="527" />
+        <di:waypoint x="340" y="527" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Event_0oemaj9_di" bpmnElement="Event_0oemaj9">
+        <dc:Bounds x="562" y="509" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0kk0yxt_di" bpmnElement="Activity_0qzu4r4">
+        <dc:Bounds x="340" y="487" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1tddh2d_di" bpmnElement="Event_16fvuor">
+        <dc:Bounds x="192" y="509" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="170" y="552" width="81" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Participant_01mpje0_di" bpmnElement="Participant_01mpje0" isHorizontal="true">
+        <dc:Bounds x="129" y="80" width="849" height="190" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_08nh1aq_di" bpmnElement="Flow_08nh1aq">
+        <di:waypoint x="210" y="270" />
+        <di:waypoint x="210" y="509" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_03we029" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.7.1">
+  <bpmn:message id="Message_12zwmex" name="signup-message" />
+  <bpmn:collaboration id="Collaboration_1vsf60c">
+    <bpmn:participant id="Participant_1s99h35" name="BPM IoT" processRef="create-customer" />
+    <bpmn:participant id="Participant_0j305bx" name="Customer" processRef="Process_108m9lh" />
+    <bpmn:messageFlow id="Flow_0pvi3p4" sourceRef="Participant_0j305bx" targetRef="StartEvent_1" />
+  </bpmn:collaboration>
+  <bpmn:process id="create-customer" name="Create Customer" isExecutable="true">
+    <bpmn:exclusiveGateway id="Gateway_13c220h" name="Valid Data?">
+      <bpmn:incoming>Flow_07cfhyj</bpmn:incoming>
+      <bpmn:outgoing>Flow_0t9vvjb</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0fiyzvd</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="Activity_0so1uaw" name="Create Customer">
+      <bpmn:extensionElements>
+        <camunda:connector>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="url">http://18.209.57.158:8000/</camunda:inputParameter>
+            <camunda:inputParameter name="method">POST</camunda:inputParameter>
+            <camunda:inputParameter name="headers">
+              <camunda:map>
+                <camunda:entry key="Content-Type">application/json</camunda:entry>
+                <camunda:entry key="Host">createcustomer.com</camunda:entry>
+              </camunda:map>
+            </camunda:inputParameter>
+            <camunda:inputParameter name="payload">{
+"firstName": "${firstName}",
+"lastName": "${lastName}",
+"birthDate": "${birthDate}",
+"postalCode": "${postalCode}",
+"street": "${street}",
+"district": "${district}",
+"council": "${council}",
+"parish": "${parish}",
+"doorNumber": ${doorNumber}
+}</camunda:inputParameter>
+            <camunda:outputParameter name="customerId">
+              <camunda:script scriptFormat="JavaScript">var requestResponse = connector.getVariable("response");
+var response = S(requestResponse).prop("message").value();
+var message = S(response);
+message.jsonPath("customerId").numberValue();</camunda:script>
+            </camunda:outputParameter>
+          </camunda:inputOutput>
+          <camunda:connectorId>http-connector</camunda:connectorId>
+        </camunda:connector>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0t9vvjb</bpmn:incoming>
+      <bpmn:outgoing>Flow_1yh9474</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:task id="Activity_1hzzels" name="Do not do anything">
+      <bpmn:incoming>Flow_0fiyzvd</bpmn:incoming>
+      <bpmn:outgoing>Flow_0b3jkd5</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:startEvent id="StartEvent_1" name="SignUp Requested">
+      <bpmn:outgoing>Flow_0wm8g2o</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1fq72qs" messageRef="Message_12zwmex" />
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0b3jkd5" sourceRef="Activity_1hzzels" targetRef="Gateway_0irejee" />
+    <bpmn:sequenceFlow id="Flow_0fiyzvd" name="No" sourceRef="Gateway_13c220h" targetRef="Activity_1hzzels">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${!valid}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_05vmuwi" sourceRef="Gateway_0irejee" targetRef="Event_0g1pe74" />
+    <bpmn:sequenceFlow id="Flow_0t9vvjb" name="Yes" sourceRef="Gateway_13c220h" targetRef="Activity_0so1uaw">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${valid}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0wm8g2o" sourceRef="StartEvent_1" targetRef="Activity_0y71tb6" />
+    <bpmn:sequenceFlow id="Flow_0ttun4w" sourceRef="create-camunda-user" targetRef="Activity_0vj0d8p" />
+    <bpmn:serviceTask id="create-camunda-user" name="Create Camunda User">
+      <bpmn:extensionElements>
+        <camunda:connector>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="url">http://34.201.112.38:8080/engine-rest/user/create</camunda:inputParameter>
+            <camunda:inputParameter name="payload">{"profile": 
+  {"id": ${customerId},
+  "firstName": "${firstName}",
+  "lastName":"${lastName}",
+  "email":"${email}"},
+"credentials": 
+  {"password":"${password}"}
+}</camunda:inputParameter>
+            <camunda:inputParameter name="method">POST</camunda:inputParameter>
+            <camunda:inputParameter name="headers">
+              <camunda:map>
+                <camunda:entry key="Content-Type">application/json</camunda:entry>
+              </camunda:map>
+            </camunda:inputParameter>
+          </camunda:inputOutput>
+          <camunda:connectorId>http-connector</camunda:connectorId>
+        </camunda:connector>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1yh9474</bpmn:incoming>
+      <bpmn:outgoing>Flow_0ttun4w</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_1pn8rz3" sourceRef="Activity_0vj0d8p" targetRef="Activity_0own4ob" />
+    <bpmn:serviceTask id="Activity_0vj0d8p" name="Add Customer to Camunda Management group">
+      <bpmn:extensionElements>
+        <camunda:connector>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="url">http://34.201.112.38:8080/engine-rest/group/management/members/${customerId}</camunda:inputParameter>
+            <camunda:inputParameter name="method">PUT</camunda:inputParameter>
+          </camunda:inputOutput>
+          <camunda:connectorId>http-connector</camunda:connectorId>
+        </camunda:connector>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0ttun4w</bpmn:incoming>
+      <bpmn:outgoing>Flow_1pn8rz3</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_07cfhyj" sourceRef="Activity_0y71tb6" targetRef="Gateway_13c220h" />
+    <bpmn:sequenceFlow id="Flow_1yh9474" sourceRef="Activity_0so1uaw" targetRef="create-camunda-user" />
+    <bpmn:endEvent id="Event_0g1pe74">
+      <bpmn:incoming>Flow_05vmuwi</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:exclusiveGateway id="Gateway_0irejee">
+      <bpmn:incoming>Flow_0b3jkd5</bpmn:incoming>
+      <bpmn:incoming>Flow_0p2qwqn</bpmn:incoming>
+      <bpmn:outgoing>Flow_05vmuwi</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="Activity_0own4ob" name="Start Frontend">
+      <bpmn:extensionElements>
+        <camunda:connector>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="url">http://34.201.112.38:8080/engine-rest/process-definition/key/frontend/start</camunda:inputParameter>
+            <camunda:inputParameter name="method">POST</camunda:inputParameter>
+            <camunda:inputParameter name="payload">{
+    "variables": {
+        "customerId": {
+            "value": "${customerId}",
+            "type": "string"
+        }   
+    } 
+}</camunda:inputParameter>
+            <camunda:inputParameter name="headers">
+              <camunda:map>
+                <camunda:entry key="Content-Type">application/json</camunda:entry>
+              </camunda:map>
+            </camunda:inputParameter>
+          </camunda:inputOutput>
+          <camunda:connectorId>http-connector</camunda:connectorId>
+        </camunda:connector>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1pn8rz3</bpmn:incoming>
+      <bpmn:outgoing>Flow_0p2qwqn</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0p2qwqn" sourceRef="Activity_0own4ob" targetRef="Gateway_0irejee" />
+    <bpmn:serviceTask id="Activity_0y71tb6" name="Data Form Validation">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:outputParameter name="Output_01c1s21">
+            <camunda:map />
+          </camunda:outputParameter>
+        </camunda:inputOutput>
+        <camunda:connector>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="payload">{
+"firstName": "${firstName}",
+"lastName": "${lastName}",
+"birthDate": "${birthDate}",
+"street": "${street}",
+"postalCode": "${postalCode}",
+"doorNumber": ${doorNumber}
+}</camunda:inputParameter>
+            <camunda:inputParameter name="url">http://18.209.57.158:8000/</camunda:inputParameter>
+            <camunda:inputParameter name="method">POST</camunda:inputParameter>
+            <camunda:inputParameter name="headers">
+              <camunda:map>
+                <camunda:entry key="Content-Type">application/json</camunda:entry>
+                <camunda:entry key="Host">validatecustomerform.com</camunda:entry>
+              </camunda:map>
+            </camunda:inputParameter>
+            <camunda:outputParameter name="valid">
+              <camunda:script scriptFormat="JavaScript">var requestResponse = connector.getVariable("response");
+var response = S(requestResponse).prop("message").value();
+var message = S(response);
+message.jsonPath("valid").boolValue();</camunda:script>
+            </camunda:outputParameter>
+            <camunda:outputParameter name="parish">
+              <camunda:script scriptFormat="JavaScript">var requestResponse = connector.getVariable("response");
+var response = S(requestResponse).prop("message").value();
+var message = S(response);
+message.jsonPath("parish").stringValue();</camunda:script>
+            </camunda:outputParameter>
+            <camunda:outputParameter name="council">
+              <camunda:script scriptFormat="JavaScript">var requestResponse = connector.getVariable("response");
+var response = S(requestResponse).prop("message").value();
+var message = S(response);
+message.jsonPath("council").stringValue();</camunda:script>
+            </camunda:outputParameter>
+            <camunda:outputParameter name="district">
+              <camunda:script scriptFormat="JavaScript">var requestResponse = connector.getVariable("response");
+var response = S(requestResponse).prop("message").value();
+var message = S(response);
+message.jsonPath("district").stringValue();</camunda:script>
+            </camunda:outputParameter>
+          </camunda:inputOutput>
+          <camunda:connectorId>http-connector</camunda:connectorId>
+        </camunda:connector>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0wm8g2o</bpmn:incoming>
+      <bpmn:outgoing>Flow_07cfhyj</bpmn:outgoing>
+    </bpmn:serviceTask>
+  </bpmn:process>
+  <bpmn:process id="Process_108m9lh" isExecutable="false" />
+  <bpmn:message id="Message_1n97stm" name="Message_2g06mjf" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1vsf60c">
+      <bpmndi:BPMNShape id="Participant_1s99h35_di" bpmnElement="Participant_1s99h35" isHorizontal="true">
+        <dc:Bounds x="129" y="114" width="1339" height="280" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0p2qwqn_di" bpmnElement="Flow_0p2qwqn">
+        <di:waypoint x="1280" y="177" />
+        <di:waypoint x="1315" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1yh9474_di" bpmnElement="Flow_1yh9474">
+        <di:waypoint x="790" y="177" />
+        <di:waypoint x="870" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_07cfhyj_di" bpmnElement="Flow_07cfhyj">
+        <di:waypoint x="420" y="179" />
+        <di:waypoint x="503" y="179" />
+        <di:waypoint x="503" y="177" />
+        <di:waypoint x="585" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1pn8rz3_di" bpmnElement="Flow_1pn8rz3">
+        <di:waypoint x="1130" y="177" />
+        <di:waypoint x="1180" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ttun4w_di" bpmnElement="Flow_0ttun4w">
+        <di:waypoint x="970" y="177" />
+        <di:waypoint x="1030" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0wm8g2o_di" bpmnElement="Flow_0wm8g2o">
+        <di:waypoint x="215" y="177" />
+        <di:waypoint x="268" y="177" />
+        <di:waypoint x="268" y="179" />
+        <di:waypoint x="320" y="179" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0t9vvjb_di" bpmnElement="Flow_0t9vvjb">
+        <di:waypoint x="635" y="177" />
+        <di:waypoint x="690" y="177" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="653" y="159" width="19" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_05vmuwi_di" bpmnElement="Flow_05vmuwi">
+        <di:waypoint x="1365" y="177" />
+        <di:waypoint x="1402" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0fiyzvd_di" bpmnElement="Flow_0fiyzvd">
+        <di:waypoint x="610" y="202" />
+        <di:waypoint x="610" y="330" />
+        <di:waypoint x="690" y="330" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="613" y="253" width="14" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0b3jkd5_di" bpmnElement="Flow_0b3jkd5">
+        <di:waypoint x="790" y="330" />
+        <di:waypoint x="1340" y="330" />
+        <di:waypoint x="1340" y="202" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Gateway_13c220h_di" bpmnElement="Gateway_13c220h" isMarkerVisible="true">
+        <dc:Bounds x="585" y="152" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="582" y="123" width="56" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_15qviq4_di" bpmnElement="Activity_0so1uaw">
+        <dc:Bounds x="690" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1hzzels_di" bpmnElement="Activity_1hzzels">
+        <dc:Bounds x="690" y="290" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_04cbm8q_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="159" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="170" y="121.5" width="54" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_17ci494_di" bpmnElement="create-camunda-user">
+        <dc:Bounds x="870" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1iis5st_di" bpmnElement="Activity_0vj0d8p">
+        <dc:Bounds x="1030" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0g1pe74_di" bpmnElement="Event_0g1pe74">
+        <dc:Bounds x="1402" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0irejee_di" bpmnElement="Gateway_0irejee" isMarkerVisible="true">
+        <dc:Bounds x="1315" y="152" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1fhog5p_di" bpmnElement="Activity_0own4ob">
+        <dc:Bounds x="1180" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1ax4drp_di" bpmnElement="Activity_0y71tb6">
+        <dc:Bounds x="320" y="139" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Participant_0j305bx_di" bpmnElement="Participant_0j305bx" isHorizontal="true">
+        <dc:Bounds x="129" y="480" width="600" height="180" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0pvi3p4_di" bpmnElement="Flow_0pvi3p4">
+        <di:waypoint x="197" y="480" />
+        <di:waypoint x="197" y="195" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

@@ -1,0 +1,604 @@
+---
+swagger: "2.0"
+info:
+  description: "SafeHomeIoT API. \n"
+  version: 1.0.0
+  title: SafeHomeIoT
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: enterpriseintegration2021@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+host: virtserver.swaggerhub.com
+basePath: /SafeHomeIoT/SafeHomeIoT/1.0.0
+tags:
+- name: Customer Handling
+  description: Customer Relationship Management, such as creating new user or adding/removing IoT devices
+- name: Event Handling
+  description: Handling the events received from IoT devices
+- name: Telecommunications Provider
+  description: Telecommunications Providers operations such as SIMCARD management
+schemes:
+- https
+- http
+paths:
+  /Catalogue:
+    get:
+      tags:
+      - Customer Handling
+      summary: Show the services' catalog to the user
+      operationId: catalogue
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        "200":
+          description: Services catalogue retrieved
+          schema:
+            $ref: '#/definitions/Catalogue'
+  /SubscribeToService:
+    put:
+      tags:
+      - Customer Handling
+      summary: Subscribe a customer to a service
+      operationId: subscribeToService
+      consumes:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: Customer ID and list containing services' IDs
+        required: true
+        schema:
+          $ref: '#/definitions/SubscribeToService'
+      responses:
+        "500":
+          description: Customer with id <customerId> already has subscription / Service wit Id <sid> does not exist! / No customer id provided! / No services provided! / No note provided!
+        "200":
+          description: Subscription Activated
+  /SuspendAll:
+    put:
+      tags:
+      - Customer Handling
+      summary: Suspend all the customers' subscriptions and devices, including in the Telco provider
+      operationId: suspendAll
+      consumes:
+      - application/json
+      parameters: []
+      responses:
+        "200":
+          description: Suspended all subscriptions!
+  /CancelSubscription:
+    delete:
+      tags:
+      - Customer Handling
+      summary: Cancel an user's subscription to the services
+      operationId: cancelSubscription
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: Customer ID
+        required: true
+        schema:
+          $ref: '#/definitions/CustomerID'
+      responses:
+        "200":
+          description: Subscription canceled for customer with id <customerId> / Customer with id <customerId> does not have a subscription!
+  /CreateCustomer:
+    post:
+      tags:
+      - Customer Handling
+      summary: Create a new customer
+      operationId: createCustomer
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: Customer's personal information
+        required: true
+        schema:
+          $ref: '#/definitions/Customer'
+      responses:
+        "500":
+          description: IoT device already exists.
+        "200":
+          description: IoT device added.
+  /ValidateUserForm:
+    get:
+      tags:
+      - Customer Handling
+      summary: Validate a customer's creation
+      operationId: validateUserForm
+      consumes:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: Customer's personal information
+        required: true
+        schema:
+          $ref: '#/definitions/PostalCode'
+      responses:
+        "500":
+          description: Fisrt name not provided / Last name not provided / Birth date Id not provided / Postal code not provided / Street not provided
+        "200":
+          description: Validated Postal code
+          schema:
+            $ref: '#/definitions/PostalCode'
+  /DeleteCustomer:
+    delete:
+      tags:
+      - Customer Handling
+      summary: Delete an existing customer
+      operationId: deleteCustomer
+      consumes:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: Customer ID
+        required: true
+        schema:
+          $ref: '#/definitions/CustomerID'
+      responses:
+        "500":
+          description: Customer Id not provided!/Could not delete simcard!/Could not cancel subscription!/Customer with id <customerId> does not exist!
+        "200":
+          description: Customer <customerId> deleted!
+  /GetCustomerInfo:
+    get:
+      tags:
+      - Customer Handling
+      summary: Get a customer's information such as associated IoT devices and services
+      operationId: getCustomerInfo
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: Customer ID
+        required: true
+        schema:
+          $ref: '#/definitions/CustomerID'
+      responses:
+        "500":
+          description: Customer Id not provided / Customer with id <customerId> does not exist!
+        "200":
+          description: JSON object containing the user services\' and IoT devices\' information
+          schema:
+            $ref: '#/definitions/CustomerInfo'
+  /PaySubscription:
+    put:
+      tags:
+      - Customer Handling
+      summary: Pay a customer's subscription with credit card
+      operationId: paySubscription
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: Customer credit card's details
+        required: true
+        schema:
+          $ref: '#/definitions/CreditCard'
+      responses:
+        "500":
+          description: Customer Id not provided / Credit card not provided / Value not provided
+        "200":
+          description: Activated customer <customerId> subscription! / Customer with customerId does not exist! / Customer customerId's subscription is already paid!
+  /AddIoTDevice:
+    post:
+      tags:
+      - Customer Handling
+      summary: Add a new IoT device
+      operationId: addIoTDevice
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: IoT device that a customer wants to add.
+        required: true
+        schema:
+          $ref: '#/definitions/IoTDevice'
+      responses:
+        "500":
+          description: IoT device already exists.
+        "200":
+          description: IoT device added.
+  /DeleteIoTDevice:
+    delete:
+      tags:
+      - Customer Handling
+      summary: Delete an existing IoT device and inactivate its SIM Card
+      operationId: deleteIoTDevice
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: Customer's personal information
+        required: true
+        schema:
+          $ref: '#/definitions/CustomerIoTDevice'
+      responses:
+        "500":
+          description: Device with SIMCARD <SIMCARD> does not belong to user! / Device with SIMCARD <SIMCARD> does not exist! / Customer with id  <customerId> does not exist! / Customer Id not provided / SIMCARD not provided
+        "200":
+          description: IoT Device with SIMCARD <SIMCARD> deleted!
+  /GetDeviceInfo:
+    get:
+      tags:
+      - Customer Handling
+      summary: get a device's information, namely its type and SIM card's status
+      operationId: getDeviceInfo
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: Customer's personal information
+        required: true
+        schema:
+          $ref: '#/definitions/CustomerIoTDevice'
+      responses:
+        "500":
+          description: Customer Id not provided / SIMCARD not provided / Customer <customerId> has no device with SIMCARD <SIMCARD> / Could not retrieve simcard status! / Customer with id <customerId> not found!
+        "200":
+          description: Device type and SIM card status
+          schema:
+            $ref: '#/definitions/SIMCARDType'
+  /GetNextEvent:
+    get:
+      tags:
+      - Telecommunications Provider
+      summary: get the events of a certain type, starting from the a certain specified last received ID.
+      operationId: getNextEvent
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: Desired events' types and last received id of that event type
+        required: true
+        schema:
+          $ref: '#/definitions/GetNextEvent'
+      responses:
+        "200":
+          description: Events list, all of the same type
+          schema:
+            $ref: '#/definitions/GetNextEventResponse'
+  /ActivateMSISDN:
+    post:
+      tags:
+      - Telecommunications Provider
+      summary: activate a device SIM card and MSISDN
+      operationId: activateMSISDN
+      consumes:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: Device's specifications
+        required: true
+        schema:
+          $ref: '#/definitions/IoTDevice'
+      responses:
+        "200":
+          description: New SIMCARD inserted! / New SIMCARD updated!
+  /SuspendMSISDN:
+    put:
+      tags:
+      - Telecommunications Provider
+      summary: suspend a device SIM card and MSISDN
+      operationId: suspendMSISDN
+      consumes:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: Device's SIM card
+        required: true
+        schema:
+          $ref: '#/definitions/SIMCARD'
+      responses:
+        "500":
+          description: No SIMCARD <SIMCARD> exists
+        "200":
+          description: SIMCARD <SIMCARD> suspended
+  /DeleteMSISDN:
+    delete:
+      tags:
+      - Telecommunications Provider
+      summary: delete and inactivate device SIM card and MSISDN
+      operationId: deleteMSISDN
+      consumes:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: Device's SIM card
+        required: true
+        schema:
+          $ref: '#/definitions/SIMCARD'
+      responses:
+        "500":
+          description: No SIMCARD <SIMCARD> exists
+        "200":
+          description: SIMCARD <SIMCARD> deleted
+  /GetStatusMSISDN:
+    get:
+      tags:
+      - Telecommunications Provider
+      summary: get the status of an Iot device with a certain SIM card.
+      operationId: getStatusMSISDN
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: Device's SIM card
+        required: true
+        schema:
+          $ref: '#/definitions/SIMCARD'
+      responses:
+        "500":
+          description: No SIMCARD <SIMCARD> exists
+        "200":
+          description: SIMCARD status
+          schema:
+            $ref: '#/definitions/SIMCARDStatus'
+  /Analytics:
+    get:
+      tags:
+      - Event Handling
+      summary: get the analytics of the data for a certain device
+      operationId: analytics
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: Device's and customer information
+        required: true
+        schema:
+          $ref: '#/definitions/CustomerIoTDeviceType'
+      responses:
+        "500":
+          description: Device with SIMCARD <SIMCARD> has no measurements! / Device with SIMCARD  <SIMCARD> has no descriptions!
+        "200":
+          description: SIMCARD status
+          schema:
+            $ref: '#/definitions/AnalyticsResponse'
+definitions:
+  Catalogue:
+    type: object
+    properties:
+      services:
+        type: array
+        items:
+          $ref: '#/definitions/Catalogue_services'
+  SubscribeToService:
+    type: object
+    properties:
+      customerId:
+        type: number
+      services:
+        type: array
+        items:
+          type: number
+  Customer:
+    type: object
+    properties:
+      firstName:
+        type: string
+      lastName:
+        type: string
+      birthDate:
+        type: string
+      street:
+        type: string
+      postalCode:
+        type: string
+      district:
+        type: string
+      council:
+        type: string
+      parish:
+        type: string
+      doorNumber:
+        type: integer
+  PostalCode:
+    type: object
+    properties:
+      firstName:
+        type: string
+      lastName:
+        type: string
+      birthDate:
+        type: string
+      street:
+        type: string
+      postalCode:
+        type: string
+      doorNumber:
+        type: integer
+  CustomerIoTDevice:
+    type: object
+    properties:
+      customerId:
+        type: number
+      SIMCARD:
+        type: number
+  CustomerIoTDeviceType:
+    type: object
+    properties:
+      customerId:
+        type: number
+      SIMCARD:
+        type: number
+      deviceType:
+        type: string
+  CustomerInfo:
+    type: object
+    properties:
+      firstName:
+        type: string
+      lastName:
+        type: string
+      address:
+        type: string
+      devices:
+        type: array
+        items:
+          $ref: '#/definitions/CustomerInfo_devices'
+      services:
+        type: array
+        items:
+          $ref: '#/definitions/Catalogue_services'
+  CustomerID:
+    type: object
+    properties:
+      customerId:
+        type: number
+  CreditCard:
+    type: object
+    properties:
+      customerId:
+        type: number
+      creditCardNumber:
+        type: string
+      value:
+        type: number
+  IoTDevice:
+    type: object
+    required:
+    - MSISDN
+    - SIMCARD
+    - deviceType
+    properties:
+      SIMCARD:
+        type: integer
+        format: int64
+      MSISDN:
+        type: integer
+        format: int64
+      deviceType:
+        type: string
+  SIMCARDType:
+    type: object
+    required:
+    - SIMCARD
+    - deviceType
+    properties:
+      SIMCARD:
+        type: number
+      MSISDN:
+        type: number
+      deviceType:
+        type: string
+      status:
+        type: string
+  SIMCARD:
+    type: object
+    properties:
+      SIMCARD:
+        type: number
+  SIMCARDStatus:
+    type: string
+  GetNextEvent:
+    type: object
+    properties:
+      eventType:
+        type: string
+      lastReceivedId:
+        type: number
+  GetNextEventResponse:
+    type: object
+    properties:
+      message:
+        type: array
+        items:
+          $ref: '#/definitions/GetNextEventResponse_message'
+  AnalyticsResponse:
+    type: object
+    properties:
+      SIMCARD:
+        type: number
+      deviceType:
+        type: string
+      avg:
+        type: number
+      max:
+        type: string
+      max_occurrence:
+        type: number
+      min:
+        type: string
+      min_occurrence:
+        type: number
+      numbAlarms:
+        type: number
+  Catalogue_services:
+    type: object
+    properties:
+      name:
+        type: string
+      cost:
+        type: number
+  CustomerInfo_devices:
+    type: object
+    properties:
+      SIMCARD:
+        type: string
+      MSISDN:
+        type: string
+      deviceType:
+        type: string
+  GetNextEventResponse_message:
+    type: object
+    required:
+    - MSISDN
+    - SIMCARD
+    - timestamp
+    properties:
+      SIMCARD:
+        type: number
+      MSISDN:
+        type: number
+      timestamp:
+        type: string
+      measurement:
+        type: number
+      description:
+        type: string
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
